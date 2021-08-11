@@ -1,2 +1,7 @@
-﻿  EyeTracker.cpp
-  AutoScroller.vcxproj -> D:\Ethang-User\Documents\Visual Studio 2019\Src\AutoScroller\x64\Debug\AutoScroller.exe
+﻿  tracker.cpp
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(36,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(37,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(38,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(39,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(113,27): warning C4244: '=': conversion from 'double' to 'DWORD', possible loss of data
+  AutoScroller.vcxproj -> C:\Users\Ethang\Desktop\AutoScroller\AutoScroller.exe

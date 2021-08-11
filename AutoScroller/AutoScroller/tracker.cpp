@@ -194,12 +194,12 @@ int main(int argc, const char** argv)
 			CascadeClassifier faceCascade;
 			CascadeClassifier eyeCascade;
 
-			if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
+			if (!faceCascade.load("ImageData/haarcascade_frontalface_alt.xml"))
 			{
 				cerr << "Could not load face detector." << endl;
 				return -1;
 			}
-			if (!eyeCascade.load("./haarcascade_eye.xml"))
+			if (!eyeCascade.load("ImageData/haarcascade_eye.xml"))
 			{
 				cerr << "Could not load eye detector." << endl;
 				return -1;
