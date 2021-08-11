@@ -80,11 +80,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\Ethang-User\Documents\Visual Studio 2019\opencv\build\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Ethang-User\Documents\Visual Studio 2019\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>D:\Ethang-User\Documents\Visual Studio 2019\opencv\build\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Ethang-User\Documents\Visual Studio 2019\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\..\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
