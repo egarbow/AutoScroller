@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EyeTracker.cpp">
+    <ClCompile Include="tracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

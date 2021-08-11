@@ -25,14 +25,14 @@ void detectPupil(vector<Vec3f> circles, Mat& eye)
 	if (circles.size() > 0)
 	{
 		pupil = circles[0];
-		
+
 		for (int i = 0; i < circles.size(); i++)
 		{
 			int total = 0, prev = 1000, radius = 0, boundL, boundR, boundU, boundD, chan1 = 0, chan2 = 0, chan3 = 0;
 			radius = cvRound(circles[i][2]);
 			Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
 			total = 0;
-			
+
 			boundL = center.x - (sqrt((radius * radius) / 2) / 2);
 			boundR = center.x + (sqrt((radius * radius) / 2) / 2);
 			boundU = center.y - (sqrt((radius * radius) / 2) / 2);
@@ -51,14 +51,14 @@ void detectPupil(vector<Vec3f> circles, Mat& eye)
 				}
 			}
 
-		    total = abs(chan1 - chan2) + abs(chan1 - chan3);
+			total = abs(chan1 - chan2) + abs(chan1 - chan3);
 			//total = chan3;
 			//total = chan1 + chan2 + chan3;
 
 			if (total < prev)
 				pupil = circles[i];
 
-			prev = total; 
+			prev = total;
 			//if (pupil[2] > circles[i][2])
 				//pupil = circles[i][2];
 		}
@@ -83,7 +83,7 @@ void detectPupil(vector<Vec3f> circles, Mat& eye)
 
 
 			Point center(totalX / 10, totalY / 10);
-			
+
 			int radius = cvRound(pupil[2]);
 			// draw the circle center
 			circle(eye, center, 3, Scalar(0, 255, 0), -1, 8, 0);
@@ -110,7 +110,7 @@ void detectPupil(vector<Vec3f> circles, Mat& eye)
 			in.mi.dwFlags = MOUSEEVENTF_WHEEL;
 			in.mi.time = 0;
 			in.mi.dwExtraInfo = 0;
-			in.mi.mouseData = -1.5*WHEEL_DELTA;
+			in.mi.mouseData = -1.5 * WHEEL_DELTA;
 			SendInput(1, &in, sizeof(in));
 			timesNotDetected = 0;
 		}
@@ -126,7 +126,7 @@ void detectEyes(Mat& frame, CascadeClassifier& faceCascade, CascadeClassifier& e
 	Mat grayscale, face, eye;
 	cvtColor(frame, grayscale, COLOR_BGR2GRAY); // convert image to grayscale
 	equalizeHist(grayscale, grayscale); // enhance image contrast 
-	
+
 	//filling faces vector with detected faces
 	vector<Rect> faces;
 	faceCascade.detectMultiScale(grayscale, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(150, 150));
@@ -169,51 +169,87 @@ void detectEyes(Mat& frame, CascadeClassifier& faceCascade, CascadeClassifier& e
 
 int main(int argc, const char** argv)
 {
-	//finds default camera on device and opens it
-	VideoCapture cap(0);
+	char trackingOption = '1';
+	bool optionSelected = false;
 
-	//opens the capture and errors if the operation fails
-	if (!cap.isOpened())
+	while (!optionSelected)
 	{
-		cerr << "No Webcam Detected!" << endl;
-		return -1;
-	}
+		cout << "Please enter 1 for hand tracking or 2 for eye tracking:\n" << endl;
+		cin >> trackingOption;
 
-	CascadeClassifier faceCascade;
-	CascadeClassifier eyeCascade;
+		if (trackingOption == '2')
+		{
+			//finds default camera on device and opens it
+			VideoCapture cap(0);
 
-	if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
-	{
-		cerr << "Could not load face detector." << endl;
-		return -1;
-	}
-	if (!eyeCascade.load("./haarcascade_eye.xml"))
-	{
-		cerr << "Could not load eye detector." << endl;
-		return -1;
-	}
-	
-	Mat frame;
+			//opens the capture and errors if the operation fails
+			if (!cap.isOpened())
+			{
+				cerr << "No Webcam Detected!" << endl;
+				return -1;
+			}
 
-	//Each itteration of this while loop will deal with each frame captured by camera
-	while (1)
-	{
-		//capturing a frame
+			optionSelected = true;
 
-		cap >> frame;
+			CascadeClassifier faceCascade;
+			CascadeClassifier eyeCascade;
 
-		if (frame.empty())
-			break;
+			if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
+			{
+				cerr << "Could not load face detector." << endl;
+				return -1;
+			}
+			if (!eyeCascade.load("./haarcascade_eye.xml"))
+			{
+				cerr << "Could not load eye detector." << endl;
+				return -1;
+			}
 
-		//face = detectFace(frame, faceCascade);
-		//eye = detectEye(frame, face, eyeCascade);
+			Mat frame;
 
-		detectEyes(frame, faceCascade, eyeCascade);
+			//Each itteration of this while loop will deal with each frame captured by camera
+			while (1)
+			{
+				//capturing a frame
 
-		imshow("Webcam", frame);
+				cap >> frame;
 
-		if (waitKey(30) >= 0)
-			break;
+				if (frame.empty())
+					break;
 
+				//face = detectFace(frame, faceCascade);
+				//eye = detectEye(frame, face, eyeCascade);
+
+				detectEyes(frame, faceCascade, eyeCascade);
+
+				imshow("Webcam", frame);
+
+				if (waitKey(30) >= 0)
+					break;
+
+			}
+		}
+		else if (trackingOption == '1')
+		{
+			optionSelected = true;
+
+			//finds default camera on device and opens it
+			VideoCapture cap(0);
+
+			//opens the capture and errors if the operation fails
+			if (!cap.isOpened())
+			{
+				cerr << "No Webcam Detected!" << endl;
+				return -1;
+			}
+
+
+
+
+		}
+		else
+		{
+			cout << "\nInvlaid argument: '" << trackingOption << "' Please try again...\n" << endl;
+		}
 	}
 }
