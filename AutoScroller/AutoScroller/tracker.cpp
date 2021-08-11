@@ -193,7 +193,18 @@ int main(int argc, const char** argv)
 
 			CascadeClassifier faceCascade;
 			CascadeClassifier eyeCascade;
-
+#ifdef _DEBUG
+			if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
+			{
+				cerr << "Could not load face detector." << endl;
+				return -1;
+			}
+			if (!eyeCascade.load("./haarcascade_eye.xml"))
+			{
+				cerr << "Could not load eye detector." << endl;
+				return -1;
+			}
+#else
 			if (!faceCascade.load("ImageData/haarcascade_frontalface_alt.xml"))
 			{
 				cerr << "Could not load face detector." << endl;
@@ -204,7 +215,7 @@ int main(int argc, const char** argv)
 				cerr << "Could not load eye detector." << endl;
 				return -1;
 			}
-
+#endif
 			Mat frame;
 
 			//Each itteration of this while loop will deal with each frame captured by camera
