@@ -10,4 +10,4 @@
 2. Tracking includes hands and eyes
 
 ## Running the Project
-Launch <code>AutoScoller.exe<code> in the root directory
+Launch <code>AutoScoller.exe</code> in the root directory
