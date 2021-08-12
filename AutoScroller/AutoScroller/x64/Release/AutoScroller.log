@@ -1,11 +1,13 @@
 ﻿  tracker.cpp
-C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(36,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(37,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(38,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(39,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(113,27): warning C4244: '=': conversion from 'double' to 'DWORD', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(44,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(45,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(46,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(47,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(121,27): warning C4244: '=': conversion from 'double' to 'DWORD', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(225,26): warning C4244: '=': conversion from 'double' to 'DWORD', possible loss of data
+C:\Users\Ethang\Desktop\AutoScroller\AutoScroller\AutoScroller\tracker.cpp(239,25): warning C4244: '=': conversion from 'double' to 'DWORD', possible loss of data
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 299 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 300 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   AutoScroller.vcxproj -> C:\Users\Ethang\Desktop\AutoScroller\AutoScroller.exe

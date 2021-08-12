@@ -13,10 +13,18 @@
 using namespace std;
 using namespace cv;
 
+
+/*
+-------------------------------------------------------------------------------------------------------------
+Using eye tracking begin
+-------------------------------------------------------------------------------------------------------------
+*/
+
 Point centers[10];
 int numCenters = 1;
 int yVals[5];
 int timesNotDetected = 0;
+int timesHandDetected = 0;
 
 void detectPupil(vector<Vec3f> circles, Mat& eye)
 {
@@ -166,6 +174,83 @@ void detectEyes(Mat& frame, CascadeClassifier& faceCascade, CascadeClassifier& e
 
 	rectangle(frame, faces[0].tl(), faces[0].br(), Scalar(255, 0, 0), 2);
 }
+/*
+-------------------------------------------------------------------------------------------------------------
+*/
+
+
+
+
+
+
+
+
+/*
+-------------------------------------------------------------------------------------------------------------
+Using hand tracking begin
+-------------------------------------------------------------------------------------------------------------
+*/
+
+void detectHand(Mat& frame, CascadeClassifier& handCascade) 
+{
+	Mat grayscale, hand;
+	//cvtColor(frame, grayscale, COLOR_BGR2GRAY);
+	cvtColor(frame, grayscale, COLOR_BGR2GRAY);
+	equalizeHist(grayscale, grayscale);
+
+	vector<Rect> hands;
+	handCascade.detectMultiScale(grayscale, hands, 1.05, 2, 0 | CASCADE_SCALE_IMAGE, Size(250, 250));
+
+	if (hands.size() == 0)
+	{
+		timesHandDetected = 0;
+		return;
+	}
+	++timesHandDetected;
+	//hand = frame(hands[0]);
+	if (timesHandDetected > 2)
+	{
+		rectangle(frame, hands[0].tl(), hands[0].br(), Scalar(0, 255, 0), 2);
+		if (hands[0].tl().x < frame.cols / 2)
+		{
+			cout << "scrolling down" << endl;
+			//mouse_event(MOUSEEVENTF_WHEEL, 0, 0, DFCS_SCROLLDOWN, 0);
+			INPUT in;
+			in.type = INPUT_MOUSE;
+			in.mi.dx = 0;
+			in.mi.dy = 0;
+			in.mi.dwFlags = MOUSEEVENTF_WHEEL;
+			in.mi.time = 0;
+			in.mi.dwExtraInfo = 0;
+			in.mi.mouseData = -.2 * WHEEL_DELTA;
+			SendInput(1, &in, sizeof(in));
+		}
+		else if (hands[0].br().x > frame.cols / 2)
+		{
+			cout << "scrolling up" << endl;
+			//mouse_event(MOUSEEVENTF_WHEEL, 0, 0, DFCS_SCROLLDOWN, 0);
+			INPUT in;
+			in.type = INPUT_MOUSE;
+			in.mi.dx = 0;
+			in.mi.dy = 0;
+			in.mi.dwFlags = MOUSEEVENTF_WHEEL;
+			in.mi.time = 0;
+			in.mi.dwExtraInfo = 0;
+			in.mi.mouseData = .2 * WHEEL_DELTA;
+			SendInput(1, &in, sizeof(in));
+		}
+
+
+	}
+}
+
+
+
+
+/*
+-------------------------------------------------------------------------------------------------------------
+*/
+
 
 int main(int argc, const char** argv)
 {
@@ -177,6 +262,12 @@ int main(int argc, const char** argv)
 		cout << "Please enter 1 for hand tracking or 2 for eye tracking:\n" << endl;
 		cin >> trackingOption;
 
+
+/*
+-------------------------------------------------------------------------------------------------------------
+Using eye tracking begin
+-------------------------------------------------------------------------------------------------------------
+*/
 		if (trackingOption == '2')
 		{
 			//finds default camera on device and opens it
@@ -193,18 +284,7 @@ int main(int argc, const char** argv)
 
 			CascadeClassifier faceCascade;
 			CascadeClassifier eyeCascade;
-#ifdef _DEBUG
-			if (!faceCascade.load("./haarcascade_frontalface_alt.xml"))
-			{
-				cerr << "Could not load face detector." << endl;
-				return -1;
-			}
-			if (!eyeCascade.load("./haarcascade_eye.xml"))
-			{
-				cerr << "Could not load eye detector." << endl;
-				return -1;
-			}
-#else
+
 			if (!faceCascade.load("ImageData/haarcascade_frontalface_alt.xml"))
 			{
 				cerr << "Could not load face detector." << endl;
@@ -215,7 +295,7 @@ int main(int argc, const char** argv)
 				cerr << "Could not load eye detector." << endl;
 				return -1;
 			}
-#endif
+
 			Mat frame;
 
 			//Each itteration of this while loop will deal with each frame captured by camera
@@ -240,6 +320,18 @@ int main(int argc, const char** argv)
 
 			}
 		}
+/*
+-------------------------------------------------------------------------------------------------------------
+*/
+
+
+
+
+/*
+-------------------------------------------------------------------------------------------------------------
+Using hand tracking begin
+-------------------------------------------------------------------------------------------------------------
+*/
 		else if (trackingOption == '1')
 		{
 			optionSelected = true;
@@ -254,10 +346,36 @@ int main(int argc, const char** argv)
 				return -1;
 			}
 
+			CascadeClassifier handCascade;
 
+			if (!handCascade.load("ImageData/HandCascade1.xml"))
+			{
+				cerr << "Could not load hand detector." << endl;
+				return -1;
+			}
 
+			Mat frame;
 
+			while (1)
+			{
+				cap >> frame;
+
+				if (frame.empty())
+					break;
+
+				detectHand(frame, handCascade);
+
+				imshow("Webcam", frame);
+
+				if(waitKey(30) >= 30)
+					break;
+			}
 		}
+/*
+-------------------------------------------------------------------------------------------------------------
+Using hand tracking end
+-------------------------------------------------------------------------------------------------------------
+*/
 		else
 		{
 			cout << "\nInvlaid argument: '" << trackingOption << "' Please try again...\n" << endl;
